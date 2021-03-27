@@ -57,10 +57,8 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //Hilt
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.hiltVersion"
 
     //Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -112,8 +110,11 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.6'
     implementation "androidx.room:room-ktx:2.2.6"
 
-
+    //TEST
     androidTestImplementation 'com.google.truth:truth:0.42'
     testImplementation "com.google.truth:truth:1.0"
+
+    //Swipe Refresh Layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
 }
