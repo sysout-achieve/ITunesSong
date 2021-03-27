@@ -4,12 +4,13 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.gunt.itunessong.data.domain.Song
+import com.gunt.itunessong.data.domain.Track
 
-class TrackListAdapter(private val onClick: (Song?) -> Unit) : PagedListAdapter<Song, TrackViewHolder>(diffUtil) {
+class TrackListAdapter(private val onClick: (Track?) -> Unit) : PagedListAdapter<Track, TrackViewHolder>(diffUtil) {
     companion object {
-        private val diffUtil = object : DiffUtil.ItemCallback<Song>() {
-            override fun areItemsTheSame(oldItem: Song, newItem: Song) = oldItem.collectionId == newItem.collectionId
-            override fun areContentsTheSame(oldItem: Song, newItem: Song) = oldItem == newItem
+        private val diffUtil = object : DiffUtil.ItemCallback<Track>() {
+            override fun areItemsTheSame(oldItem: Track, newItem: Track) = oldItem.trackId == newItem.trackId
+            override fun areContentsTheSame(oldItem: Track, newItem: Track) = oldItem == newItem
         }
     }
 

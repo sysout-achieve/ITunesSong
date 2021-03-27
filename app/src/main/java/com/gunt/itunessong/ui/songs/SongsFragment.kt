@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gunt.itunessong.BR
 import com.gunt.itunessong.R
 import com.gunt.itunessong.data.domain.Song
+import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.databinding.FragmentSongsBinding
 import com.gunt.itunessong.ui.bind.TrackListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +41,7 @@ class SongsFragment : Fragment() {
     }
 
 
-    private fun onClickStar(song: Song?) {
+    private fun onClickStar(song: Track?) {
 
     }
 

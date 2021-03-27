@@ -6,6 +6,7 @@ import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.gunt.itunessong.data.domain.Song
+import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.SongRepository
 import com.gunt.itunessong.ui.bind.TrackDataService
 import com.gunt.itunessong.ui.bind.TrackDataSource
@@ -29,15 +30,15 @@ constructor(
             .build()
 
     val trackList = LivePagedListBuilder(
-            object : DataSource.Factory<Int, Song>() {
-                override fun create(): DataSource<Int, Song> {
+            object : DataSource.Factory<Int, Track>() {
+                override fun create(): DataSource<Int, Track> {
                     return TrackDataSource(this@SongsViewModel)
                 }
             },
             config
     ).build()
 
-    override fun fetchSongs(limit: Int, offset: Int, unit: (List<Song>) -> Unit) {
+    override fun fetchSongs(limit: Int, offset: Int, unit: (List<Track>) -> Unit) {
         songRepository.fetchSongs(limit, offset)
                 .subscribeOn(Schedulers.io())
                 .subscribe({

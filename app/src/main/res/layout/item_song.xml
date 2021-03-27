@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="song"
-            type="com.gunt.itunessong.data.domain.Song" />
+            name="track"
+            type="com.gunt.itunessong.data.domain.Track" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,7 +28,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="18dp"
-                app:loadImage="@{song.artworkUrl60}"
+                app:loadImage="@{track.artworkUrl60}"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    app:text="@{song.trackName}"
+                    app:text="@{track.trackName}"
                     tools:text="trackName" />
 
                 <TextView
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    app:text="@{song.trackId.toString()}"
+                    app:text="@{track.trackId.toString()}"
                     tools:text="trackName" />
 
                 <TextView
@@ -60,13 +60,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    app:text="@{song.collectionName}"
+                    app:text="@{track.collectionName}"
                     tools:text="collectionName" />
 
                 <TextView
                     android:id="@+id/txt_artistname"
                     android:layout_width="wrap_content"
-                    app:text="@{song.artistName}"
+                    app:text="@{track.artistName}"
                     android:layout_height="wrap_content"
                     tools:text="artistName" />
 

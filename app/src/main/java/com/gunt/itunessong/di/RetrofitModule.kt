@@ -1,6 +1,7 @@
 package com.gunt.itunessong.di
 
 import com.gunt.itunessong.BuildConfig
+import com.gunt.itunessong.data.mapper.TrackMapper
 import com.gunt.itunessong.data.repository.network.SongRepositoryService
 import dagger.Module
 import dagger.Provides
