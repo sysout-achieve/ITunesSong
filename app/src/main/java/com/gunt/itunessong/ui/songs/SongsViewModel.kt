@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.gunt.itunessong.data.domain.Song
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.SongRepository
 import com.gunt.itunessong.ui.bind.TrackDataService

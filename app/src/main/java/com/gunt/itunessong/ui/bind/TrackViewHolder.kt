@@ -3,7 +3,6 @@ package com.gunt.itunessong.ui.bind
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.gunt.itunessong.data.domain.Song
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.databinding.ItemSongBinding
 

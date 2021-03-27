@@ -3,7 +3,6 @@ package com.gunt.itunessong.ui.bind
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.gunt.itunessong.data.domain.Song
 import com.gunt.itunessong.data.domain.Track
 
 class TrackListAdapter(private val onClick: (Track?) -> Unit) : PagedListAdapter<Track, TrackViewHolder>(diffUtil) {

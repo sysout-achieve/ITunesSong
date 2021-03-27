@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gunt.itunessong.BR
 import com.gunt.itunessong.R
-import com.gunt.itunessong.data.domain.Song
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.databinding.FragmentSongsBinding
 import com.gunt.itunessong.ui.bind.TrackListAdapter

@@ -1,7 +1,6 @@
 package com.gunt.itunessong.ui.bind
 
 import androidx.paging.PageKeyedDataSource
-import com.gunt.itunessong.data.domain.Song
 import com.gunt.itunessong.data.domain.Track
 
 class TrackDataSource(private val trackDataService: TrackDataService) : PageKeyedDataSource<Int, Track>() {
