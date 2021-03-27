@@ -1,5 +1,6 @@
 package com.gunt.itunessong.di
 
+import com.gunt.itunessong.data.mapper.TrackEntityMapper
 import com.gunt.itunessong.data.mapper.TrackMapper
 import com.gunt.itunessong.data.repository.SongRepository
 import com.gunt.itunessong.data.repository.network.SongRepositoryRemote
@@ -28,4 +29,5 @@ object RepositoryModule {
     fun provideTrackMapper(): TrackMapper {
         return TrackMapper()
     }
+
 }

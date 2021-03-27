@@ -16,4 +16,13 @@ class TrackMapper : DomainMapper<Song, Track> {
     fun toDomainModelList(initial: List<Song>): List<Track> =
         initial.map { mapToDomainModel(it) }
 
+    override fun mapFromDomainModel(domainModel: Track): Song {
+       return Song(
+            trackId = domainModel.trackId,
+            artistName = domainModel.artistName,
+            trackName = domainModel.trackName,
+            collectionName = domainModel.collectionName,
+            artworkUrl60 = domainModel.artworkUrl60
+        )
+    }
 }
