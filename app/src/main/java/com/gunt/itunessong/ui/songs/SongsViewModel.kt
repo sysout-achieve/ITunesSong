@@ -41,14 +41,17 @@ constructor(
         loading.postValue(true)
         songRepository.fetchSongs(limit, offset)
             .subscribeOn(Schedulers.io())
-            .subscribe({
+            .subscribe(
+                {
 
-                //TODO : null safety 고려해야함
-                unit(it.results!!)
-                loading.postValue(false)
-            }, {
-                it.printStackTrace()
-                loading.postValue(false)
-            })
+                    // TODO : null safety 고려해야함
+                    unit(it.results!!)
+                    loading.postValue(false)
+                },
+                {
+                    it.printStackTrace()
+                    loading.postValue(false)
+                }
+            )
     }
 }

@@ -19,7 +19,7 @@ object RepositoryModule {
     fun provideSongRepository(
         songRepositoryService: SongRepositoryService,
         trackMapper: TrackMapper
-    ) : SongRepository{
+    ): SongRepository {
         return SongRepositoryRemote(songRepositoryService, trackMapper)
     }
 

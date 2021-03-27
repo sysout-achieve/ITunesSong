@@ -1,11 +1,11 @@
 package com.gunt.itunessong.ui.songs
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gunt.itunessong.BR
@@ -39,9 +39,7 @@ class SongsFragment : Fragment() {
         return binding.root
     }
 
-
     private fun onClickStar(song: Track?) {
-
     }
 
     private fun setupListAdapter() {
@@ -76,6 +74,4 @@ class SongsFragment : Fragment() {
     private fun swipeRefresh() {
         (binding.recyclerTrack.adapter as TrackListAdapter).currentList?.dataSource?.invalidate()
     }
-
-
 }
