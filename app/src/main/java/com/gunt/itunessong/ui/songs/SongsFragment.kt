@@ -22,9 +22,9 @@ class SongsFragment : Fragment() {
     private val viewModel: SongsViewModel by viewModels()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_songs, container, false)
         binding.lifecycleOwner = this
@@ -53,17 +53,17 @@ class SongsFragment : Fragment() {
 
     private fun setupPagedListObserver() {
         viewModel.trackList.observe(
-                this.viewLifecycleOwner,
-                {
-                    (binding.recyclerTrack.adapter as TrackListAdapter).submitList(it)
-                }
+            this.viewLifecycleOwner,
+            {
+                (binding.recyclerTrack.adapter as TrackListAdapter).submitList(it)
+            }
         )
     }
 
     private fun setupLoadingObserver() {
         viewModel.loading.observe(
-                this.viewLifecycleOwner,
-                { binding.layoutRefresh.isRefreshing = it }
+            this.viewLifecycleOwner,
+            { binding.layoutRefresh.isRefreshing = it }
         )
     }
 

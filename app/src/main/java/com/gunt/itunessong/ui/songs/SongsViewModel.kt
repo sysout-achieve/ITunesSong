@@ -17,35 +17,38 @@ import javax.inject.Inject
 class SongsViewModel
 @Inject
 constructor(
-        private val songRepository: SongRepository
+    private val songRepository: SongRepository
 ) : ViewModel(), TrackDataService {
 
     val loading: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val config = PagedList.Config.Builder()
-            .setInitialLoadSizeHint(30)
-            .setPageSize(30)
-            .setEnablePlaceholders(false)
-            .build()
+        .setInitialLoadSizeHint(30)
+        .setPageSize(30)
+        .setEnablePlaceholders(false)
+        .build()
 
     val trackList = LivePagedListBuilder(
-            object : DataSource.Factory<Int, Track>() {
-                override fun create(): DataSource<Int, Track> {
-                    return TrackDataSource(this@SongsViewModel)
-                }
-            },
-            config
+        object : DataSource.Factory<Int, Track>() {
+            override fun create(): DataSource<Int, Track> {
+                return TrackDataSource(this@SongsViewModel)
+            }
+        },
+        config
     ).build()
 
     override fun fetchSongs(limit: Int, offset: Int, unit: (List<Track>) -> Unit) {
+        loading.postValue(true)
         songRepository.fetchSongs(limit, offset)
-                .subscribeOn(Schedulers.io())
-                .subscribe({
+            .subscribeOn(Schedulers.io())
+            .subscribe({
 
-                    //TODO : null safety 고려해야함
-                    unit(it.results!!)
-                }, {
-                    it.printStackTrace()
-                })
+                //TODO : null safety 고려해야함
+                unit(it.results!!)
+                loading.postValue(false)
+            }, {
+                it.printStackTrace()
+                loading.postValue(false)
+            })
     }
 }

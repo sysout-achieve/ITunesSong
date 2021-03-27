@@ -8,8 +8,8 @@ import com.gunt.itunessong.databinding.ItemSongBinding
 
 class TrackViewHolder
 constructor
-(private val binding: ItemSongBinding, private val onClick: (Track?) -> Unit)
-    : RecyclerView.ViewHolder(binding.root) {
+    (private val binding: ItemSongBinding, private val onClick: (Track?) -> Unit) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Track?) {
         binding.track = item
