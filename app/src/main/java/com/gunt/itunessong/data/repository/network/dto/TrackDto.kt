@@ -1,6 +1,6 @@
 package com.gunt.itunessong.data.repository.network.dto
 
-data class Song(
+data class TrackDto(
     var trackId: Long,
     var artistName: String?,
     var trackName: String?,

@@ -1,7 +1,7 @@
 package com.gunt.itunessong.data.repository.network
 
 import com.gunt.itunessong.data.domain.Track
-import com.gunt.itunessong.data.mapper.TrackMapper
+import com.gunt.itunessong.data.mapper.TrackDtoMapper
 import com.gunt.itunessong.data.repository.SongRepository
 import com.gunt.itunessong.data.repository.network.response.ITunesResponse
 import dagger.Module
@@ -14,14 +14,14 @@ import io.reactivex.rxjava3.core.Single
 class SongRepositoryRemote
 constructor(
     private var songRepositoryService: SongRepositoryService,
-    private var trackMapper: TrackMapper
+    private var trackDtoMapper: TrackDtoMapper
 ) : SongRepository {
 
     override fun fetchSongs(limit: Int, offset: Int): Single<ITunesResponse<Track>> {
         return songRepositoryService.fetchSongs(limit = limit, offset = offset).map {
             ITunesResponse(
                 it.resultCount,
-                trackMapper.toDomainModelList(it.results!!)
+                trackDtoMapper.toDomainModelList(it.results!!)
             )
         }
     }

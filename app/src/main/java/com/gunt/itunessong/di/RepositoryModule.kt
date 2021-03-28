@@ -1,6 +1,6 @@
 package com.gunt.itunessong.di
 
-import com.gunt.itunessong.data.mapper.TrackMapper
+import com.gunt.itunessong.data.mapper.TrackDtoMapper
 import com.gunt.itunessong.data.repository.SongRepository
 import com.gunt.itunessong.data.repository.network.SongRepositoryRemote
 import com.gunt.itunessong.data.repository.network.SongRepositoryService
@@ -18,15 +18,15 @@ object RepositoryModule {
     @Provides
     fun provideSongRepository(
         songRepositoryService: SongRepositoryService,
-        trackMapper: TrackMapper
+        trackDtoMapper: TrackDtoMapper
     ): SongRepository {
-        return SongRepositoryRemote(songRepositoryService, trackMapper)
+        return SongRepositoryRemote(songRepositoryService, trackDtoMapper)
     }
 
     @Singleton
     @Provides
-    fun provideTrackMapper(): TrackMapper {
-        return TrackMapper()
+    fun provideTrackMapper(): TrackDtoMapper {
+        return TrackDtoMapper()
     }
 
 }

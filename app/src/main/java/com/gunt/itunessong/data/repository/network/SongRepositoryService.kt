@@ -1,6 +1,6 @@
 package com.gunt.itunessong.data.repository.network
 
-import com.gunt.itunessong.data.repository.network.dto.Song
+import com.gunt.itunessong.data.repository.network.dto.TrackDto
 import com.gunt.itunessong.data.repository.network.response.ITunesResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
@@ -14,5 +14,5 @@ interface SongRepositoryService {
         @Query("entity") entity: String = "song",
         @Query("limit") limit: Int,
         @Query("offset") offset: Int
-    ): Single<ITunesResponse<Song>>
+    ): Single<ITunesResponse<TrackDto>>
 }
