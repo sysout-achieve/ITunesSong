@@ -1,21 +1,21 @@
 package com.gunt.itunessong.ui.songs
 
-import com.gunt.itunessong.data.repository.network.SongRepositoryRemote
-import com.gunt.itunessong.di.RetrofitModule
 import org.junit.Before
 import org.junit.Test
 
-class SongsViewModelTest{
+class SongsViewModelTest {
 
     lateinit var songsViewModel: SongsViewModel
 
     @Before
     fun setUp() {
-        songsViewModel = SongsViewModel(
-            SongRepositoryRemote(
-                RetrofitModule.provideRetrofitApiService(RetrofitModule.provideOkHttpClient())
-            )
-        )
+//        songsViewModel = SongsViewModel(
+//            SongRepositoryRemote(
+//                RetrofitModule.provideRetrofitApiService(RetrofitModule.provideOkHttpClient()),
+//                RepositoryModule.provideTrackMapper()
+//            )
+//        ,FavoriteRepositoryRoom(RoomModule.)
+//        )
     }
 
     @Test
@@ -24,11 +24,10 @@ class SongsViewModelTest{
         var size = 0
         var leng = 0
 
-
         // when
-        songsViewModel.fetchSongs(30, 0) {
-            size = it.resultCount!!
-            leng = it.results!!.size
+        songsViewModel.fetchTracks(30, 0) {
+//            size = it.size!!
+//            leng = it.results!!.size
         }
 
         // then

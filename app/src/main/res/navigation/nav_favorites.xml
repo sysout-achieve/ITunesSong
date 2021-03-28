@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_favorites"
     app:startDestination="@id/favoritesFragment">
-
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.gunt.itunessong.ui.favorite.FavoritesFragment"
-        android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        android:label="FavoritesFragment"
+        tools:layout="@layout/fragment_favorites"/>
 </navigation>

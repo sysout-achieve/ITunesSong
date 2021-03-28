@@ -5,7 +5,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.gunt.itunessong.data.domain.Track
 
-class TrackListAdapter(private val onClick: (Track?) -> Unit) : PagedListAdapter<Track, TrackViewHolder>(diffUtil) {
+class TrackListAdapter(private val onClick: (Track?, Int) -> Unit) : PagedListAdapter<Track, TrackViewHolder>(diffUtil) {
     companion object {
         private val diffUtil = object : DiffUtil.ItemCallback<Track>() {
             override fun areItemsTheSame(oldItem: Track, newItem: Track) =
@@ -20,6 +20,6 @@ class TrackListAdapter(private val onClick: (Track?) -> Unit) : PagedListAdapter
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position)!!)
     }
 }

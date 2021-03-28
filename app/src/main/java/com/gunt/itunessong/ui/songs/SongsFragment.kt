@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import com.gunt.itunessong.BR
 import com.gunt.itunessong.R
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.databinding.FragmentSongsBinding
+import com.gunt.itunessong.ui.MainViewModel.Companion.checkFavorite
 import com.gunt.itunessong.ui.bind.TrackListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,22 +32,25 @@ class SongsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.setVariable(BR.songsViewModel, viewModel)
         binding.executePendingBindings()
+        (activity as AppCompatActivity).supportActionBar?.title = "Songs"
 
         setupListAdapter()
-        setupLoadingObserver()
         setupPagedListObserver()
         setupSwipeRefreshListener()
+        setupUpdatedIdObserver()
 
         return binding.root
     }
 
-    private fun onClickStar(song: Track?) {
+    private fun onClickStar(track: Track, position: Int) {
+        if (!checkFavorite(track)) viewModel.insertFavorite(track, position)
+        else viewModel.deleteFavorite(track, position)
     }
 
     private fun setupListAdapter() {
         binding.recyclerTrack.layoutManager = LinearLayoutManager(binding.root.context)
-        binding.recyclerTrack.adapter = TrackListAdapter {
-            onClickStar(it)
+        binding.recyclerTrack.adapter = TrackListAdapter { track, position ->
+            onClickStar(track!!, position)
         }
     }
 
@@ -58,10 +63,12 @@ class SongsFragment : Fragment() {
         )
     }
 
-    private fun setupLoadingObserver() {
-        viewModel.loading.observe(
+    private fun setupUpdatedIdObserver() {
+        viewModel.updatedPosition.observe(
             this.viewLifecycleOwner,
-            { binding.layoutRefresh.isRefreshing = it }
+            {
+                (binding.recyclerTrack.adapter as TrackListAdapter).notifyItemChanged(it, Unit)
+            }
         )
     }
 

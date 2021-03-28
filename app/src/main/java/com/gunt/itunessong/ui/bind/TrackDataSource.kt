@@ -8,7 +8,7 @@ class TrackDataSource(private val trackDataService: TrackDataService) : PageKeye
     private var offset = 0
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Track>) {
-        trackDataService.fetchSongs(params.requestedLoadSize, offset) { response ->
+        trackDataService.fetchTracks(params.requestedLoadSize, offset) { response ->
             offset += params.requestedLoadSize
             callback.onResult(response, null, offset)
         }
@@ -17,7 +17,7 @@ class TrackDataSource(private val trackDataService: TrackDataService) : PageKeye
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Track>) {}
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Track>) {
-        trackDataService.fetchSongs(params.requestedLoadSize, params.key) { response ->
+        trackDataService.fetchTracks(params.requestedLoadSize, params.key) { response ->
             offset += params.requestedLoadSize
             callback.onResult(response, offset)
         }

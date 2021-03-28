@@ -1,13 +1,13 @@
 package com.gunt.itunessong.data.repository
 
 import com.gunt.itunessong.data.domain.Track
-import com.gunt.itunessong.data.repository.network.response.ITunesResponse
-import io.reactivex.rxjava3.core.Single
 
 interface FavoriteRepository {
-    fun fetchFavoriteTrack(limit: Int, offset: Int): Single<ITunesResponse<Track>>
+    suspend fun getAll(): List<Track>
 
-    fun insertFavoriteTrack(track: Track, unit:()->Unit)
+    suspend fun fetchFavoriteTrack(limit: Int, offset: Int): List<Track>
 
-    fun deleteFavoriteTrack(track: Track, unit:()->Unit)
+    suspend fun insertFavoriteTrack(track: Track)
+
+    suspend fun deleteFavoriteTrack(track: Track)
 }

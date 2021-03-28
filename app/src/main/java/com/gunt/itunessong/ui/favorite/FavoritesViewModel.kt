@@ -1,4 +1,4 @@
-package com.gunt.itunessong.ui.songs
+package com.gunt.itunessong.ui.favorite
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,12 +8,10 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.FavoriteRepository
-import com.gunt.itunessong.data.repository.SongRepository
 import com.gunt.itunessong.ui.MainViewModel
 import com.gunt.itunessong.ui.bind.TrackDataService
 import com.gunt.itunessong.ui.bind.TrackDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -21,15 +19,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SongsViewModel
+class FavoritesViewModel
 @Inject
 constructor(
-    private val songRepository: SongRepository,
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel(), TrackDataService {
 
     val updatedPosition = MutableLiveData<Int>()
-    val loading = MutableLiveData(false)
 
     private val config = PagedList.Config.Builder()
         .setInitialLoadSizeHint(30)
@@ -40,26 +36,17 @@ constructor(
     val trackList = LivePagedListBuilder(
         object : DataSource.Factory<Int, Track>() {
             override fun create(): DataSource<Int, Track> {
-                return TrackDataSource(this@SongsViewModel)
+                return TrackDataSource(this@FavoritesViewModel)
             }
         },
         config
     ).build()
 
     override fun fetchTracks(limit: Int, offset: Int, unit: (List<Track>) -> Unit) {
-        loading.postValue(true)
-        songRepository.fetchSongs(limit, offset)
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                {
-                    unit(it.results!!)
-                    loading.postValue(false)
-                },
-                {
-                    it.printStackTrace()
-                    loading.postValue(false)
-                }
-            )
+        viewModelScope.launch {
+            val trackList = favoriteRepository.fetchFavoriteTrack(limit, offset)
+            unit(trackList)
+        }
     }
 
     fun insertFavorite(track: Track, position: Int) {

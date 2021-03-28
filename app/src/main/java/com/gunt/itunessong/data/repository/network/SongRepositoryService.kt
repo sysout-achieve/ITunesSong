@@ -1,6 +1,6 @@
 package com.gunt.itunessong.data.repository.network
 
-import com.gunt.itunessong.data.domain.Song
+import com.gunt.itunessong.data.repository.network.dto.Song
 import com.gunt.itunessong.data.repository.network.response.ITunesResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET

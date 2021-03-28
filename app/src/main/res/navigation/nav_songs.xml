@@ -8,19 +8,8 @@
     <fragment
         android:id="@+id/songsFragment"
         android:name="com.gunt.itunessong.ui.songs.SongsFragment"
-        android:label="fragment_songs"
+        android:label="SongsFragment"
         tools:layout="@layout/fragment_songs" >
-        <action
-            android:id="@+id/action_songsFragment_to_favoritesFragment2"
-            app:destination="@id/favoritesFragment2" />
     </fragment>
-    <fragment
-        android:id="@+id/favoritesFragment2"
-        android:name="com.gunt.itunessong.ui.favorite.FavoritesFragment"
-        android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
-        <action
-            android:id="@+id/action_favoritesFragment2_to_songsFragment"
-            app:destination="@id/songsFragment" />
-    </fragment>
+
 </navigation>

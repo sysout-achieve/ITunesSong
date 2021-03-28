@@ -1,4 +1,4 @@
-package com.gunt.itunessong.data.domain
+package com.gunt.itunessong.data.repository.network.dto
 
 data class Song(
     var trackId: Long,

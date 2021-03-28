@@ -1,6 +1,6 @@
 package com.gunt.itunessong.data.mapper
 
-import com.gunt.itunessong.data.domain.Song
+import com.gunt.itunessong.data.repository.network.dto.Song
 import com.gunt.itunessong.data.domain.Track
 
 class TrackMapper : DomainMapper<Song, Track> {
