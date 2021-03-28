@@ -75,7 +75,6 @@ constructor(
             }
     }
 
-
     fun deleteFavorite(track: Track, position: Int) {
         favoriteRepository.deleteFavoriteTrack(track)
             .subscribeOn(Schedulers.io())

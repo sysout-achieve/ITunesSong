@@ -10,25 +10,13 @@ import org.junit.Before
 import org.junit.Test
 import java.lang.reflect.Field
 
-
-class SongsViewModelTest{
-    lateinit var songsViewModel:SongsViewModel
+class SongsViewModelTest {
+    lateinit var songsViewModel: SongsViewModel
 
     @Before
     fun setUp() {
         val list = mutableListOf<Track>()
-        for (i in 1..20){
-            list.add(
-                Track(
-                    trackId = i.toLong(),
-                    artistName = "greenday",
-                    collectionName = "greendayCollection",
-                    trackName = "greendayTrackName",
-                    artworkUrl60 = "https://is2-ssl.mzstatic.com/image/thumb/Music114/v4/77/4b/20/774b2007-2198-8fa3-1491-8c0e3b0ce4f2/source/60x60bb.jpg"
-                )
-            )
-        }
-        songsViewModel = SongsViewModel(FakeSongRepository(list),FakeFavoriteRepository(list.subList(0,9)))
+        songsViewModel = SongsViewModel(FakeSongRepository(list), FakeFavoriteRepository(list))
     }
 
     @Test

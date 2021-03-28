@@ -1,6 +1,5 @@
 package com.gunt.itunessong.ui
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.FavoriteRepository
@@ -21,7 +20,7 @@ constructor(
 
     companion object {
         // Favorites에 저장된 ID값을 HashMap 으로 저장(저장되어있을 경우 true, 없을 경우 false)
-        private lateinit var hashMapFavorites : HashMap<Long, Boolean>
+        private lateinit var hashMapFavorites: HashMap<Long, Boolean>
 
         fun insertFavorite(track: Track) {
             hashMapFavorites[track.trackId] = true
@@ -39,10 +38,13 @@ constructor(
     private fun getAllFavorites() {
         hashMapFavorites = HashMap()
         favoriteRepository.getAll()
-            .subscribe({ result ->
-                result.forEach { hashMapFavorites[it.trackId] = true }
-            }, {
-                Timber.d(it)
-            })
+            .subscribe(
+                { result ->
+                    result.forEach { hashMapFavorites[it.trackId] = true }
+                },
+                {
+                    Timber.d(it)
+                }
+            )
     }
 }

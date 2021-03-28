@@ -11,5 +11,5 @@ interface FavoriteRepository {
 
     fun insertFavoriteTrack(track: Track): Completable
 
-    fun deleteFavoriteTrack(track: Track):Completable
+    fun deleteFavoriteTrack(track: Track): Completable
 }

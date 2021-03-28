@@ -1,6 +1,10 @@
 package com.gunt.itunessong.data.repository.db
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.gunt.itunessong.data.repository.db.entity.TrackEntity
 import io.reactivex.Completable
 import io.reactivex.Single

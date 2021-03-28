@@ -22,17 +22,17 @@ constructor(
         }
     }
 
-    override  fun fetchFavoriteTrack(limit: Int, offset: Int): Single<List<Track>> {
+    override fun fetchFavoriteTrack(limit: Int, offset: Int): Single<List<Track>> {
         return trackDao.fetchTracks(limit, offset).map {
             trackEntityMapper.toDomainModelList(it)
         }
     }
 
     override fun insertFavoriteTrack(track: Track): Completable {
-       return trackDao.insert(trackEntityMapper.mapFromDomainModel(track))
+        return trackDao.insert(trackEntityMapper.mapFromDomainModel(track))
     }
 
-    override fun deleteFavoriteTrack(track: Track):Completable {
+    override fun deleteFavoriteTrack(track: Track): Completable {
         return trackDao.delete(trackEntityMapper.mapFromDomainModel(track))
     }
 }

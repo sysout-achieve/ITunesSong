@@ -44,11 +44,14 @@ constructor(
     override fun fetchTracks(limit: Int, offset: Int, unit: (List<Track>) -> Unit) {
         favoriteRepository.fetchFavoriteTrack(limit, offset)
             .subscribeOn(Schedulers.io())
-            .subscribe({
-                unit(it)
-            }, {
-                Timber.d(it)
-            })
+            .subscribe(
+                {
+                    unit(it)
+                },
+                {
+                    Timber.d(it)
+                }
+            )
     }
 
     fun insertFavorite(track: Track, position: Int) {
@@ -59,7 +62,6 @@ constructor(
                 updateTargetPosition(position)
             }
     }
-
 
     fun deleteFavorite(track: Track, position: Int) {
         favoriteRepository.deleteFavoriteTrack(track)
