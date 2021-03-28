@@ -3,7 +3,7 @@ package com.gunt.itunessong.data.mapper
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.db.entity.TrackEntity
 
-class TrackEntityMapper :DomainMapper<TrackEntity, Track> {
+class TrackEntityMapper : DomainMapper<TrackEntity, Track> {
 
     override fun mapToDomainModel(model: TrackEntity): Track {
         return Track(
@@ -11,7 +11,7 @@ class TrackEntityMapper :DomainMapper<TrackEntity, Track> {
             artistName = model.artistName,
             collectionName = model.collectionName,
             trackName = model.trackName,
-            artworkUrl60= model.artworkUrl60
+            artworkUrl60 = model.artworkUrl60
         )
     }
 
@@ -24,7 +24,7 @@ class TrackEntityMapper :DomainMapper<TrackEntity, Track> {
             artistName = domainModel.artistName,
             collectionName = domainModel.collectionName,
             trackName = domainModel.trackName,
-            artworkUrl60= domainModel.artworkUrl60
+            artworkUrl60 = domainModel.artworkUrl60
         )
     }
 }

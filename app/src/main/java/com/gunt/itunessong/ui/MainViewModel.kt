@@ -20,7 +20,7 @@ constructor(
     }
 
     companion object {
-        //Favorites에 저장된 ID값을 HashMap 으로 저장(저장되어있을 경우 true, 없을 경우 false)
+        // Favorites에 저장된 ID값을 HashMap 으로 저장(저장되어있을 경우 true, 없을 경우 false)
         private val hashMapFavorites = HashMap<Long, Boolean>()
 
         fun insertFavorite(track: Track) {
@@ -41,5 +41,4 @@ constructor(
             favoriteRepository.getAll().forEach { hashMapFavorites[it.trackId] = true }
         }
     }
-
 }

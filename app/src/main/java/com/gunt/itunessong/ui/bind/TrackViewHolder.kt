@@ -10,7 +10,7 @@ import com.gunt.itunessong.ui.MainViewModel.Companion.checkFavorite
 
 class TrackViewHolder
 constructor
-(private val binding: ItemSongBinding, private val onClick: (Track?,Int) -> Unit) :
+(private val binding: ItemSongBinding, private val onClick: (Track?, Int) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Track) {

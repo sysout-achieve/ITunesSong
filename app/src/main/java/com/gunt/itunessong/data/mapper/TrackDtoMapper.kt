@@ -1,7 +1,7 @@
 package com.gunt.itunessong.data.mapper
 
-import com.gunt.itunessong.data.repository.network.dto.TrackDto
 import com.gunt.itunessong.data.domain.Track
+import com.gunt.itunessong.data.repository.network.dto.TrackDto
 
 class TrackDtoMapper : DomainMapper<TrackDto, Track> {
     override fun mapToDomainModel(model: TrackDto): Track =
@@ -17,7 +17,7 @@ class TrackDtoMapper : DomainMapper<TrackDto, Track> {
         initial.map { mapToDomainModel(it) }
 
     override fun mapFromDomainModel(domainModel: Track): TrackDto {
-       return TrackDto(
+        return TrackDto(
             trackId = domainModel.trackId,
             artistName = domainModel.artistName,
             trackName = domainModel.trackName,
