@@ -23,8 +23,8 @@ object RoomModule {
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
         return Room.databaseBuilder(
             appContext,
-            AppDatabase::class.java
-            , "database-iTunes"
+            AppDatabase::class.java,
+            "database-iTunes"
         ).build()
     }
 
