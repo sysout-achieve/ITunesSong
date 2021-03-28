@@ -21,15 +21,10 @@ object RoomModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
-//        return Room.databaseBuilder(
-//            appContext,
-//            AppDatabase::class.java
-//            , "database-iTunes"
-//        ).build()
-        //TODO : 배포 전 메모리 DB -> 실제 내부 DB로 변경 필요
-        return Room.inMemoryDatabaseBuilder(
+        return Room.databaseBuilder(
             appContext,
             AppDatabase::class.java
+            , "database-iTunes"
         ).build()
     }
 
