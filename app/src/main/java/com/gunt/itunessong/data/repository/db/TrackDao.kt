@@ -2,25 +2,27 @@ package com.gunt.itunessong.data.repository.db
 
 import androidx.room.*
 import com.gunt.itunessong.data.repository.db.entity.TrackEntity
+import io.reactivex.Completable
+import io.reactivex.Single
 
 @Dao
 interface TrackDao {
 
     @Query("SELECT * FROM TRACK ")
-    suspend fun getAll(): List<TrackEntity>
+    fun getAll(): Single<List<TrackEntity>>
 
     @Query("SELECT * FROM TRACK LIMIT :limit OFFSET :offset")
-    suspend fun fetchTracks(limit: Int, offset: Int): List<TrackEntity>
+    fun fetchTracks(limit: Int, offset: Int): Single<List<TrackEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(trackEntity: TrackEntity)
+    fun insert(trackEntity: TrackEntity): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTracksAll(tracks: List<TrackEntity>)
+    fun insertTracksAll(tracks: List<TrackEntity>)
 
     @Delete
-    suspend fun delete(trackEntity: TrackEntity)
+    fun delete(trackEntity: TrackEntity): Completable
 
     @Query("DELETE FROM TRACK")
-    suspend fun deleteAll()
+    fun deleteAll()
 }

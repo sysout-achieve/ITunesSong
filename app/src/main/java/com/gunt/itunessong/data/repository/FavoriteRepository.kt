@@ -1,13 +1,15 @@
 package com.gunt.itunessong.data.repository
 
 import com.gunt.itunessong.data.domain.Track
+import io.reactivex.Completable
+import io.reactivex.Single
 
 interface FavoriteRepository {
-    suspend fun getAll(): List<Track>
+    fun getAll(): Single<List<Track>>
 
-    suspend fun fetchFavoriteTrack(limit: Int, offset: Int): List<Track>
+    fun fetchFavoriteTrack(limit: Int, offset: Int): Single<List<Track>>
 
-    suspend fun insertFavoriteTrack(track: Track)
+    fun insertFavoriteTrack(track: Track): Completable
 
-    suspend fun deleteFavoriteTrack(track: Track)
+    fun deleteFavoriteTrack(track: Track):Completable
 }

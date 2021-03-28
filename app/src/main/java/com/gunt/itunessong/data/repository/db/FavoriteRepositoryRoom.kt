@@ -6,6 +6,8 @@ import com.gunt.itunessong.data.repository.FavoriteRepository
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
+import io.reactivex.Completable
+import io.reactivex.Single
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
@@ -14,23 +16,23 @@ constructor(
     private var trackDao: TrackDao,
     private var trackEntityMapper: TrackEntityMapper
 ) : FavoriteRepository {
-    override suspend fun getAll(): List<Track> {
+    override fun getAll(): Single<List<Track>> {
         return trackDao.getAll().map {
-            trackEntityMapper.mapToDomainModel(it)
+            trackEntityMapper.toDomainModelList(it)
         }
     }
 
-    override suspend fun fetchFavoriteTrack(limit: Int, offset: Int): List<Track> {
+    override  fun fetchFavoriteTrack(limit: Int, offset: Int): Single<List<Track>> {
         return trackDao.fetchTracks(limit, offset).map {
-            trackEntityMapper.mapToDomainModel(it)
+            trackEntityMapper.toDomainModelList(it)
         }
     }
 
-    override suspend fun insertFavoriteTrack(track: Track) {
-        trackDao.insert(trackEntityMapper.mapFromDomainModel(track))
+    override fun insertFavoriteTrack(track: Track): Completable {
+       return trackDao.insert(trackEntityMapper.mapFromDomainModel(track))
     }
 
-    override suspend fun deleteFavoriteTrack(track: Track) {
-        trackDao.delete(trackEntityMapper.mapFromDomainModel(track))
+    override fun deleteFavoriteTrack(track: Track):Completable {
+        return trackDao.delete(trackEntityMapper.mapFromDomainModel(track))
     }
 }

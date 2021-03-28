@@ -82,12 +82,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
 
-    // Coroutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
-
     // RX
     //rxjava
     implementation 'io.reactivex.rxjava3:rxjava:3.0.1'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     //rxkotlin
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
     //rxAndroid
@@ -116,6 +114,7 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.2.6'
     implementation 'androidx.room:room-runtime:2.2.6'
     implementation "androidx.room:room-ktx:2.2.6"
+    implementation "androidx.room:room-rxjava2:2.2.4"
 
     //TEST
     androidTestImplementation 'com.google.truth:truth:0.42'
@@ -124,4 +123,6 @@ dependencies {
     //Swipe Refresh Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    //Timber Log
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }

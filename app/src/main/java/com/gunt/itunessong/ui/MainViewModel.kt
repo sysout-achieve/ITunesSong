@@ -1,11 +1,11 @@
 package com.gunt.itunessong.ui
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.FavoriteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,7 +21,7 @@ constructor(
 
     companion object {
         // Favorites에 저장된 ID값을 HashMap 으로 저장(저장되어있을 경우 true, 없을 경우 false)
-        private val hashMapFavorites = HashMap<Long, Boolean>()
+        private lateinit var hashMapFavorites : HashMap<Long, Boolean>
 
         fun insertFavorite(track: Track) {
             hashMapFavorites[track.trackId] = true
@@ -37,8 +37,12 @@ constructor(
     }
 
     private fun getAllFavorites() {
-        viewModelScope.launch {
-            favoriteRepository.getAll().forEach { hashMapFavorites[it.trackId] = true }
-        }
+        hashMapFavorites = HashMap()
+        favoriteRepository.getAll()
+            .subscribe({ result ->
+                result.forEach { hashMapFavorites[it.trackId] = true }
+            }, {
+                Timber.d(it)
+            })
     }
 }

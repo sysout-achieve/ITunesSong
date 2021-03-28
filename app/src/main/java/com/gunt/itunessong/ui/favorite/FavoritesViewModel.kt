@@ -2,7 +2,6 @@ package com.gunt.itunessong.ui.favorite
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -14,10 +13,8 @@ import com.gunt.itunessong.ui.bind.TRACK_PAGING_ITEM_SIZE
 import com.gunt.itunessong.ui.bind.TrackDataService
 import com.gunt.itunessong.ui.bind.TrackDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,32 +42,32 @@ constructor(
     ).build()
 
     override fun fetchTracks(limit: Int, offset: Int, unit: (List<Track>) -> Unit) {
-        viewModelScope.launch {
-            val trackList = favoriteRepository.fetchFavoriteTrack(limit, offset)
-            unit(trackList)
-        }
+        favoriteRepository.fetchFavoriteTrack(limit, offset)
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                unit(it)
+            }, {
+                Timber.d(it)
+            })
     }
 
     fun insertFavorite(track: Track, position: Int) {
-        viewModelScope.launch {
-            val deferred = CoroutineScope(Dispatchers.IO).async {
-                favoriteRepository.insertFavoriteTrack(track)
+        favoriteRepository.insertFavoriteTrack(track)
+            .subscribeOn(Schedulers.io())
+            .subscribe {
                 MainViewModel.insertFavorite(track)
+                updateTargetPosition(position)
             }
-            deferred.await()
-            updateTargetPosition(position)
-        }
     }
 
+
     fun deleteFavorite(track: Track, position: Int) {
-        viewModelScope.launch {
-            val deferred = CoroutineScope(Dispatchers.IO).async {
-                favoriteRepository.deleteFavoriteTrack(track)
+        favoriteRepository.deleteFavoriteTrack(track)
+            .subscribeOn(Schedulers.io())
+            .subscribe {
                 MainViewModel.deleteFavorite(track)
+                updateTargetPosition(position)
             }
-            deferred.await()
-            updateTargetPosition(position)
-        }
     }
 
     private fun updateTargetPosition(position: Int) {

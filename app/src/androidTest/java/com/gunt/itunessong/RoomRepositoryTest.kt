@@ -15,7 +15,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 
-
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class RoomRepositoryDaoTest {
@@ -40,27 +39,27 @@ class RoomRepositoryDaoTest {
     }
 
     @Test
-    fun trackDao1InsertTest() = runBlocking {
+    fun trackDao1InsertTest(){
         //when
         appDatabase.trackDAO().insert(trackEntity)
 
         //then
-        assertThat(appDatabase.trackDAO().getAll()[0]).isEqualTo(trackEntity)
+        assertThat(appDatabase.trackDAO().getAll().blockingGet()).isEqualTo(trackEntity)
     }
 
     @Test
-    fun trackDao2DeleteTest() = runBlocking {
+    fun trackDao2DeleteTest(){
         //given
         // trackDao1InsertTest()
         //when
         appDatabase.trackDAO().delete(trackEntity)
 
         //then
-        assertThat(appDatabase.trackDAO().getAll()).isEmpty()
+        assertThat(appDatabase.trackDAO().getAll().blockingGet()).isEmpty()
     }
 
     @Test
-    fun trackDao3InsertListTest() = runBlocking {
+    fun trackDao3InsertListTest(){
         //given
         val expected = 31
         val list = mutableListOf<TrackEntity>()
@@ -79,13 +78,13 @@ class RoomRepositoryDaoTest {
         appDatabase.trackDAO().insertTracksAll(list)
 
         //then
-        val resultList = appDatabase.trackDAO().getAll()
+        val resultList = appDatabase.trackDAO().getAll().blockingGet()
         assertThat(resultList.size).isNotEqualTo(0)
         assertThat(resultList.size).isEqualTo(expected)
     }
 
     @Test
-    fun trackDao4FetchTest() = runBlocking {
+    fun trackDao4FetchTest(){
         //given
         val listInsert = mutableListOf<TrackEntity>()
         for (i in 1..31){
@@ -102,19 +101,19 @@ class RoomRepositoryDaoTest {
         appDatabase.trackDAO().insertTracksAll(listInsert)
 
         //when
-        val list = appDatabase.trackDAO().fetchTracks(10,0)
+        val list = appDatabase.trackDAO().fetchTracks(10,0).blockingGet()
 
         //then
         assertThat(list.size).isEqualTo(10)
 
         // 저장된 31개의 데이터 중에 limit 10 offset 30일 경우 -> 기대값 = 1
         val expected = 1
-        val list2 = appDatabase.trackDAO().fetchTracks(10,30)
+        val list2 = appDatabase.trackDAO().fetchTracks(10,30).blockingGet()
         assertThat(list2.size).isEqualTo(expected)
     }
 
     @After
-    fun cleanup() = runBlocking {
+    fun cleanup(){
         appDatabase.trackDAO().deleteAll()
     }
 }

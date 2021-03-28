@@ -2,7 +2,6 @@ package com.gunt.itunessong.ui.songs
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -17,11 +16,8 @@ import com.gunt.itunessong.ui.bind.TrackDataService
 import com.gunt.itunessong.ui.bind.TrackDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,14 +49,14 @@ constructor(
     override fun fetchTracks(limit: Int, offset: Int, unit: (List<Track>) -> Unit) {
         loading.postValue(true)
         getFetchSongs(limit, offset)
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
             .subscribe(
                 {
                     unit(it.results!!)
                     loading.postValue(false)
                 },
                 {
-                    it.printStackTrace()
+                    Timber.d(it)
                     loading.postValue(false)
                 }
             )
@@ -71,25 +67,22 @@ constructor(
     }
 
     fun insertFavorite(track: Track, position: Int) {
-        viewModelScope.launch {
-            val deferred = CoroutineScope(Dispatchers.Default).async {
-                favoriteRepository.insertFavoriteTrack(track)
+        favoriteRepository.insertFavoriteTrack(track)
+            .subscribeOn(Schedulers.io())
+            .subscribe {
                 MainViewModel.insertFavorite(track)
+                updateTargetPosition(position)
             }
-            deferred.await()
-            updateTargetPosition(position)
-        }
     }
 
+
     fun deleteFavorite(track: Track, position: Int) {
-        viewModelScope.launch {
-            val deferred = CoroutineScope(Dispatchers.Default).async {
-                favoriteRepository.deleteFavoriteTrack(track)
+        favoriteRepository.deleteFavoriteTrack(track)
+            .subscribeOn(Schedulers.io())
+            .subscribe {
                 MainViewModel.deleteFavorite(track)
+                updateTargetPosition(position)
             }
-            deferred.await()
-            updateTargetPosition(position)
-        }
     }
 
     private fun updateTargetPosition(position: Int) {
