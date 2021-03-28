@@ -32,7 +32,7 @@ class SongsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.setVariable(BR.songsViewModel, viewModel)
         binding.executePendingBindings()
-        (activity as AppCompatActivity).supportActionBar?.title = "Songs"
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_title_songs)
 
         setupListAdapter()
         setupPagedListObserver()

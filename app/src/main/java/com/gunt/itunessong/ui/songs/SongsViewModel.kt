@@ -10,6 +10,8 @@ import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.FavoriteRepository
 import com.gunt.itunessong.data.repository.SongRepository
 import com.gunt.itunessong.ui.MainViewModel
+import com.gunt.itunessong.ui.bind.TRACK_INITIAL_ITEM_SIZE
+import com.gunt.itunessong.ui.bind.TRACK_PAGING_ITEM_SIZE
 import com.gunt.itunessong.ui.bind.TrackDataService
 import com.gunt.itunessong.ui.bind.TrackDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,8 +34,8 @@ constructor(
     val loading = MutableLiveData(false)
 
     private val config = PagedList.Config.Builder()
-        .setInitialLoadSizeHint(30)
-        .setPageSize(30)
+        .setInitialLoadSizeHint(TRACK_INITIAL_ITEM_SIZE)
+        .setPageSize(TRACK_PAGING_ITEM_SIZE)
         .setEnablePlaceholders(false)
         .build()
 

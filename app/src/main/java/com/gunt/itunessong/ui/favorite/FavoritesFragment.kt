@@ -33,7 +33,7 @@ class FavoritesFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.setVariable(BR.favoriteViewModel, viewModel)
         binding.executePendingBindings()
-        (activity as AppCompatActivity).supportActionBar?.title = "Favorites"
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_title_favorite)
 
         setupListAdapter()
         setupPagedListObserver()

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ITunesSong</string>
+    <string name="fragment_title_favorite">Favorites</string>
+    <string name="fragment_title_songs">Songs</string>
 </resources>
