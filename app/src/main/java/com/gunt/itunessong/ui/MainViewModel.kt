@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.FavoriteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ constructor(
 
     companion object {
         // Favorites에 저장된 ID값을 HashMap 으로 저장(저장되어있을 경우 true, 없을 경우 false)
-        private lateinit var hashMapFavorites: HashMap<Long, Boolean>
+        private var hashMapFavorites = HashMap<Long, Boolean>()
 
         fun insertFavorite(track: Track) {
             hashMapFavorites[track.trackId] = true
@@ -36,8 +37,8 @@ constructor(
     }
 
     private fun getAllFavorites() {
-        hashMapFavorites = HashMap()
         favoriteRepository.getAll()
+            .subscribeOn(Schedulers.io())
             .subscribe(
                 { result ->
                     result.forEach { hashMapFavorites[it.trackId] = true }
