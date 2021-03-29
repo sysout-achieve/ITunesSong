@@ -51,6 +51,9 @@ __DataBinding__ <br>
 __LiveDate__ <br>
 : Activity, Fragment에서 binding되어진 viewModel의 데이터를 observing합니다.
 - 바인딩한 viewmodel의 데이터를 간접적으로 사용 가능하게하여 데이터와 뷰의 분리 실현시킬 수 있습니다.
+- LiveData를 observe할 때 화면의 lifeCycle을 포함하여 구성됩니다. <br>
+이를 통해 화면의 lifeCycle이 종료된 시점에 LiveData의 변경은 무시됩니다. 따라서 LiveData로 인한 UI변경에서 생기는 Crash를 방지할 수 있습니다.
+
 
 ### ViewModel(AAC)
 : 화면 생명주기를 감지하고 있는 독립된 생명주기를 갖습니다. <br>
@@ -60,13 +63,15 @@ __LiveDate__ <br>
 : ORM 기반의 Database를 이용하여 객체 지향적 사고로 DB를 사용하고 싶었습니다.<br>
 설계에 어려움이 있다는 단점은 주어진 과제를 기준으로 할 때 단점이라 여기기 어려웠고, <br>
 적용했을 때 실제 Data를 가진 객체처럼 DB사용이 가능했습니다.<br>
+ORM기반 DB 라이브러리로 Realm과 Room 이 있지만, Google에서 제공한다는 점과 라이브러리 크기가 더 작다는 장점으로 Room을 선택했습니다. 
+
 
 ### Paging
 : Jetpack AAC에서 제공하는 paging library를 이용하였습니다.<br>
 recyclerView에서 적용하기 위해 만들어진 라이브러리로 간편한 적용과 직관적인 처리가 가능하다는 강점이 있었습니다.<br>
 
 paging처리를 SongsFragment와 FavoritesFragment 모두 적용하였습니다.<br>
-두 화면의 RecyclerView에서 표현해야할 항목들만 다를 뿐, 같은 기능을 하고 있다 판단하여 하나의 Adapter와 Paging class를 양쪽에서 사용할 수 있도록 추상화하여 구현하였습니다. 
+두 화면의 RecyclerView에서 표현해야할 항목들만 다를 뿐, 같은 기능을 하고 있다 판단하여 하나의 Adapter와 Paging class를 두 화면 모두 사용할 수 있도록 추상화하여 구현하였습니다. 
 
 ### Glide
 : 대표적인 이미지 처리 라이브러리 중에 Glide를 선택했습니다.<br>
