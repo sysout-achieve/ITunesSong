@@ -13,6 +13,7 @@ import com.gunt.itunessong.ui.bind.TRACK_PAGING_ITEM_SIZE
 import com.gunt.itunessong.ui.bind.TrackDataService
 import com.gunt.itunessong.ui.bind.TrackDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -24,6 +25,7 @@ constructor(
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel(), TrackDataService {
 
+    private val compositeDisposable = CompositeDisposable()
     val updatedPosition = MutableLiveData<Int>()
 
     private val config = PagedList.Config.Builder()
@@ -42,37 +44,48 @@ constructor(
     ).build()
 
     override fun fetchTracks(limit: Int, offset: Int, unit: (List<Track>) -> Unit) {
-        favoriteRepository.fetchFavoriteTrack(limit, offset)
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                {
-                    unit(it)
-                },
-                {
-                    Timber.d(it)
-                }
-            )
+        compositeDisposable.add(
+            favoriteRepository.fetchFavoriteTrack(limit, offset)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        unit(it)
+                    },
+                    {
+                        Timber.d(it)
+                    }
+                )
+        )
     }
 
     fun insertFavorite(track: Track, position: Int) {
-        favoriteRepository.insertFavoriteTrack(track)
-            .subscribeOn(Schedulers.io())
-            .subscribe {
-                MainViewModel.insertFavorite(track)
-                updateTargetPosition(position)
-            }
+        compositeDisposable.add(
+            favoriteRepository.insertFavoriteTrack(track)
+                .subscribeOn(Schedulers.io())
+                .subscribe {
+                    MainViewModel.insertFavorite(track)
+                    updateTargetPosition(position)
+                }
+        )
     }
 
     fun deleteFavorite(track: Track, position: Int) {
-        favoriteRepository.deleteFavoriteTrack(track)
-            .subscribeOn(Schedulers.io())
-            .subscribe {
-                MainViewModel.deleteFavorite(track)
-                updateTargetPosition(position)
-            }
+        compositeDisposable.add(
+            favoriteRepository.deleteFavoriteTrack(track)
+                .subscribeOn(Schedulers.io())
+                .subscribe {
+                    MainViewModel.deleteFavorite(track)
+                    updateTargetPosition(position)
+                }
+        )
     }
 
     private fun updateTargetPosition(position: Int) {
         updatedPosition.postValue(position)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 }

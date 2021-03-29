@@ -15,6 +15,7 @@ import com.gunt.itunessong.ui.bind.TRACK_PAGING_ITEM_SIZE
 import com.gunt.itunessong.ui.bind.TrackDataService
 import com.gunt.itunessong.ui.bind.TrackDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -25,11 +26,14 @@ class SongsViewModel
 @Inject
 constructor(
     private val songRepository: SongRepository,
-    val favoriteRepository: FavoriteRepository
+    private val favoriteRepository: FavoriteRepository
 ) : ViewModel(), TrackDataService {
 
     val updatedPosition = MutableLiveData<Int>()
     val loading = MutableLiveData(false)
+
+    private val compositeDisposable = CompositeDisposable()
+    private val compositeDisposableRx3 = io.reactivex.rxjava3.disposables.CompositeDisposable()
 
     private val config = PagedList.Config.Builder()
         .setInitialLoadSizeHint(TRACK_INITIAL_ITEM_SIZE)
@@ -48,18 +52,20 @@ constructor(
 
     override fun fetchTracks(limit: Int, offset: Int, unit: (List<Track>) -> Unit) {
         loading.postValue(true)
-        getFetchSongs(limit, offset)
-            .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
-            .subscribe(
-                {
-                    unit(it.results!!)
-                    loading.postValue(false)
-                },
-                {
-                    Timber.d(it)
-                    loading.postValue(false)
-                }
-            )
+        compositeDisposableRx3.add(
+            getFetchSongs(limit, offset)
+                .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
+                .subscribe(
+                    {
+                        unit(it.results!!)
+                        loading.postValue(false)
+                    },
+                    {
+                        Timber.d(it)
+                        loading.postValue(false)
+                    }
+                )
+        )
     }
 
     fun getFetchSongs(limit: Int, offset: Int): Single<ITunesResponse<Track>> {
@@ -67,24 +73,34 @@ constructor(
     }
 
     fun insertFavorite(track: Track, position: Int) {
-        favoriteRepository.insertFavoriteTrack(track)
-            .subscribeOn(Schedulers.io())
-            .subscribe {
-                MainViewModel.insertFavorite(track)
-                updateTargetPosition(position)
-            }
+        compositeDisposable.add(
+            favoriteRepository.insertFavoriteTrack(track)
+                .subscribeOn(Schedulers.io())
+                .subscribe {
+                    MainViewModel.insertFavorite(track)
+                    updateTargetPosition(position)
+                }
+        )
     }
 
     fun deleteFavorite(track: Track, position: Int) {
-        favoriteRepository.deleteFavoriteTrack(track)
-            .subscribeOn(Schedulers.io())
-            .subscribe {
-                MainViewModel.deleteFavorite(track)
-                updateTargetPosition(position)
-            }
+        compositeDisposable.add(
+            favoriteRepository.deleteFavoriteTrack(track)
+                .subscribeOn(Schedulers.io())
+                .subscribe {
+                    MainViewModel.deleteFavorite(track)
+                    updateTargetPosition(position)
+                }
+        )
     }
 
     private fun updateTargetPosition(position: Int) {
         updatedPosition.postValue(position)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+        compositeDisposableRx3.clear()
     }
 }

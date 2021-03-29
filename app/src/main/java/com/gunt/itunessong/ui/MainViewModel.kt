@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.data.repository.FavoriteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -14,6 +15,8 @@ class MainViewModel
 constructor(
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
+
+    private val compositeDisposable = CompositeDisposable()
 
     init {
         getAllFavorites()
@@ -37,15 +40,22 @@ constructor(
     }
 
     private fun getAllFavorites() {
-        favoriteRepository.getAll()
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                { result ->
-                    result.forEach { hashMapFavorites[it.trackId] = true }
-                },
-                {
-                    Timber.d(it)
-                }
-            )
+        compositeDisposable.add(
+            favoriteRepository.getAll()
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    { result ->
+                        result.forEach { hashMapFavorites[it.trackId] = true }
+                    },
+                    {
+                        Timber.d(it)
+                    }
+                )
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 }
