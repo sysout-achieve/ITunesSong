@@ -2,11 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_favorites"
-    app:startDestination="@id/favoritesFragment">
+    android:id="@+id/nav_songs"
+    app:startDestination="@id/songsFragment">
+
+    <fragment
+        android:id="@+id/songsFragment"
+        android:name="com.gunt.itunessong.ui.songs.SongsFragment"
+        android:label="SongsFragment"
+        tools:layout="@layout/fragment_songs">
+
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.gunt.itunessong.ui.favorite.FavoritesFragment"
         android:label="FavoritesFragment"
-        tools:layout="@layout/fragment_favorites"/>
+        tools:layout="@layout/fragment_favorites">
+
+    </fragment>
+
 </navigation>

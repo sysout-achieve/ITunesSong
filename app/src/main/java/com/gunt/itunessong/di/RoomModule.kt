@@ -28,6 +28,7 @@ object RoomModule {
         ).build()
     }
 
+    @Singleton
     @Provides
     fun provideChannelDao(appDatabase: AppDatabase): TrackDao {
         return appDatabase.trackDAO()

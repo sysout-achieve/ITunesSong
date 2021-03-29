@@ -14,8 +14,7 @@
         android:id="@+id/layout_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:refreshing="@{songsViewModel.loading}"
-        >
+        app:refreshing="@{songsViewModel.loading}">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_track"

@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gunt.itunessong.BR
 import com.gunt.itunessong.R
 import com.gunt.itunessong.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
 
-    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,25 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding.executePendingBindings()
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment
-        navController = navHostFragment.navController
-
-        setupBottomNavigationSelectedListener()
-    }
-
-    private fun setupBottomNavigationSelectedListener() {
-        binding.bottomNav.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.song -> {
-                    navController.setGraph(R.navigation.nav_songs)
-                    setupActionBarWithNavController(navController)
-                }
-                R.id.favorite -> {
-                    navController.setGraph(R.navigation.nav_favorites)
-                    setupActionBarWithNavController(navController)
-                }
-            }
-            return@setOnNavigationItemSelectedListener true
-        }
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.botttom_navigation)
+        bottomNavigationView.setupWithNavController(findNavController(R.id.container))
     }
 }
