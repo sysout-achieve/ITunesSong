@@ -37,7 +37,7 @@ class FavoritesFragment : Fragment() {
 
         setupListAdapter()
         setupPagedListObserver()
-        setupUpdatedIdObserver()
+        setupUpdatedItemPositionObserver()
 
         return binding.root
     }
@@ -65,7 +65,7 @@ class FavoritesFragment : Fragment() {
         )
     }
 
-    private fun setupUpdatedIdObserver() {
+    private fun setupUpdatedItemPositionObserver() {
         viewModel.updatedPosition.observe(
             this.viewLifecycleOwner,
             {

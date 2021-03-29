@@ -37,7 +37,7 @@ class SongsFragment : Fragment() {
         setupListAdapter()
         setupPagedListObserver()
         setupSwipeRefreshListener()
-        setupUpdatedIdObserver()
+        setupUpdatedItemPositionObserver()
 
         return binding.root
     }
@@ -63,7 +63,7 @@ class SongsFragment : Fragment() {
         )
     }
 
-    private fun setupUpdatedIdObserver() {
+    private fun setupUpdatedItemPositionObserver() {
         viewModel.updatedPosition.observe(
             this.viewLifecycleOwner,
             {
