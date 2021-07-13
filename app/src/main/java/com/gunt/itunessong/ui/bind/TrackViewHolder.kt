@@ -8,10 +8,10 @@ import com.gunt.itunessong.data.domain.Track
 import com.gunt.itunessong.databinding.ItemSongBinding
 import com.gunt.itunessong.ui.MainViewModel.Companion.checkFavorite
 
-class TrackViewHolder
-constructor
-(private val binding: ItemSongBinding, private val onClick: (Track?, Int) -> Unit) :
-    RecyclerView.ViewHolder(binding.root) {
+class TrackViewHolder constructor(
+    private val binding: ItemSongBinding,
+    private val onClick: (Track?, Int) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Track) {
         if (checkFavorite(item)) binding.imgStar.setImageResource(R.drawable.ic_like_star)
