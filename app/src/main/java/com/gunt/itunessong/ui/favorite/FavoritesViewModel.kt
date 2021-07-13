@@ -88,5 +88,4 @@ constructor(
         super.onCleared()
         compositeDisposable.clear()
     }
-
 }
